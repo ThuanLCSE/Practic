@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +42,22 @@ public class MainActivity extends AppCompatActivity {
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.date_picker_dialog);
+        datePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
+        final TextView txtDate = (TextView) dialog.findViewById(R.id.txtTime);
+        txtDate.setText(calendar.get(Calendar.DAY_OF_MONTH)+"/"+(calendar.get(Calendar.DAY_OF_MONTH)+1)+"/"+
+                calendar.get(Calendar.YEAR));
+        datePicker.init(calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) +1,  calendar.get(Calendar.DAY_OF_MONTH) ,
+                new DatePicker.OnDateChangedListener()
+                {
+                    @Override
+                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                    {
+                        txtDate.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+                        Log.d("FSA",dayOfMonth+"/"+monthOfYear+"/"+year);
+                    }
+                }
+        );
         Button btnChon = (Button) findViewById(R.id.btnDate);
         btnChon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,22 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 if (chk3.isChecked()) price += prices[2];
                 if (chk4.isChecked()) price += prices[3];
                 ((TextView)dialog.findViewById(R.id.txtPrice)).setText("Tổng chi phí:" +price);
-                datePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
-                final TextView txtDate = (TextView) dialog.findViewById(R.id.txtTime);
-                datePicker.init(calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH) +1,  calendar.get(Calendar.DAY_OF_MONTH) ,
-                        new DatePicker.OnDateChangedListener()
-                    {
-                        @Override
-                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-                    {
-                        txtDate.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
-                        Log.d("FSA",dayOfMonth+"/"+monthOfYear+"/"+year);
-                    }
 
-
-                    }
-                );
                 Button btnDat = (Button) dialog.findViewById(R.id.btnDat);
                 btnDat.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         DBUtils db = new DBUtils(MainActivity.this);
                         db = db.open();
                         db.insertDate("Androis User",txtDate.getText().toString());
+                        Toast.makeText(MainActivity.this,"đã lưu "+" Andoid User "+" thời gian "+txtDate.getText().toString(),Toast.LENGTH_SHORT).show();
                     }
                 });
                 Button btnThoat = (Button) dialog.findViewById(R.id.btnThoat);
