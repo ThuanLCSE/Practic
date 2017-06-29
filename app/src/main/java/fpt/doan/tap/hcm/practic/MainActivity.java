@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         DBUtils db = new DBUtils(MainActivity.this);
+                        db = db.open();
                         db.insertDate("Androis User",txtDate.getText().toString());
                     }
                 });
