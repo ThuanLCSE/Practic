@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.date_picker_dialog);
         datePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
         final TextView txtDate = (TextView) dialog.findViewById(R.id.txtTime);
-        txtDate.setText(calendar.get(Calendar.DAY_OF_MONTH)+"/"+(calendar.get(Calendar.DAY_OF_MONTH)+1)+"/"+
+        txtDate.setText(calendar.get(Calendar.DAY_OF_MONTH)+"/"+(calendar.get(Calendar.MONTH)+1)+"/"+
                 calendar.get(Calendar.YEAR));
         datePicker.init(calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH) +1,  calendar.get(Calendar.DAY_OF_MONTH) ,
